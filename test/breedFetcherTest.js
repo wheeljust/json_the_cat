@@ -2,6 +2,7 @@ const { fetchBreedDescription } = require('../breedFetcher');
 const { assert } = require('chai');
 
 describe('fetchBreedDescription', () => {
+  
   it('returns a string description for a valid breed, via callback', (done) => {
     fetchBreedDescription('Siberian', (err, desc) => {
       // we expect no error for this scenario
@@ -15,4 +16,17 @@ describe('fetchBreedDescription', () => {
       done();
     });
   });
+
+  it('returns an error when breed name is not available via callback', (done) => {
+    fetchBreedDescription('dog', (err, desc) => {
+      
+      assert.equal(err, 'Breed name not found in database.');
+
+      // we expect no description because the breed does not exist
+      assert.equal(null, desc);
+
+      done();
+    });
+  });
+
 });
